@@ -20,8 +20,10 @@ setreadonly(mt, true)
 
 -- GUI SETUP
 local ScreenGui = Instance.new("ScreenGui", CoreGui)
+
+-- Main Frame (Уже была Draggable, добавили Active для корректной работы)
 local MainFrame = Instance.new("Frame", ScreenGui)
-MainFrame.Size = UDim2.new(0, 300, 0, 400); MainFrame.Position = UDim2.new(0.5, -150, 0.5, -200); MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20); MainFrame.BorderSizePixel = 0; MainFrame.Visible = false; MainFrame.Draggable = true
+MainFrame.Size = UDim2.new(0, 300, 0, 400); MainFrame.Position = UDim2.new(0.5, -150, 0.5, -200); MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20); MainFrame.BorderSizePixel = 0; MainFrame.Visible = false; MainFrame.Active = true; MainFrame.Draggable = true
 
 local Title = Instance.new("TextLabel", MainFrame); Title.Size = UDim2.new(1, 0, 0, 40); Title.Text = "MODE_CHEAT"; Title.BackgroundColor3 = Color3.fromRGB(30, 30, 30); Title.TextColor3 = Color3.new(1,1,1); Title.Font = Enum.Font.Code; Title.TextSize = 20
 
@@ -39,7 +41,6 @@ CreateBtn("Aimbot", 60); CreateBtn("WallBang", 110); CreateBtn("ESP", 160)
 
 -- MAIN LOOP
 RunService.RenderStepped:Connect(function()
-    -- AIMBOT LOGIC
     if Toggles.Aimbot and UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) then
         local closest, min = nil, 999
         for _, p in pairs(Players:GetPlayers()) do
@@ -52,7 +53,6 @@ RunService.RenderStepped:Connect(function()
         if closest then Camera.CFrame = CFrame.new(Camera.CFrame.Position, closest.Position) end
     end
 
-    -- ESP LOGIC
     for _, p in pairs(Players:GetPlayers()) do
         if p ~= LocalPlayer and p.Character then
             local highlight = p.Character:FindFirstChild("ESPHighlight")
@@ -70,8 +70,8 @@ RunService.RenderStepped:Connect(function()
     end
 end)
 
--- LOGIN
-local LoginFrame = Instance.new("Frame", ScreenGui); LoginFrame.Size = UDim2.new(0, 200, 0, 100); LoginFrame.Position = UDim2.new(0.5, -100, 0.5, -50); LoginFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+-- LOGIN (Добавлено Draggable и Active)
+local LoginFrame = Instance.new("Frame", ScreenGui); LoginFrame.Size = UDim2.new(0, 200, 0, 100); LoginFrame.Position = UDim2.new(0.5, -100, 0.5, -50); LoginFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20); LoginFrame.Active = true; LoginFrame.Draggable = true
 local Input = Instance.new("TextBox", LoginFrame); Input.Size = UDim2.new(0, 180, 0, 40); Input.Position = UDim2.new(0, 10, 0, 10); Input.PlaceholderText = "KEY"
 local CheckBtn = Instance.new("TextButton", LoginFrame); CheckBtn.Size = UDim2.new(0, 180, 0, 30); CheckBtn.Position = UDim2.new(0, 10, 0, 60); CheckBtn.Text = "LOGIN"
 CheckBtn.MouseButton1Click:Connect(function() if Input.Text == "SERIY-290" then LoginFrame:Destroy(); MainFrame.Visible = true end end)
